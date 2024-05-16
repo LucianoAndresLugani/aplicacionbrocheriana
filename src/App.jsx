@@ -1,5 +1,4 @@
-// App.jsx
-import { useState } from 'react';
+import  { useState } from 'react';
 import './App.css';
 import 'bulma/css/bulma.min.css';
 
@@ -23,7 +22,7 @@ const MissionButton = ({ mission, onMissionClick }) => {
   );
 };
 
-const MissionDetails = ({ mission, onMissionComplete }) => {
+const MissionDetails = ({ mission, onMissionComplete, onReturnToMissions }) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleNextStep = () => {
@@ -40,12 +39,6 @@ const MissionDetails = ({ mission, onMissionComplete }) => {
       setCurrentStep(currentStep - 1);
     }
   };
-
-  const handleOpenSteps = () => {
-    const stepsUrl = `data:text/plain;charset=utf-8,${encodeURIComponent(mission.steps.join('\n'))}`;
-    window.open(stepsUrl, '_blank');
-  };
-  
 
   return (
     <div className="mission-details">
@@ -67,10 +60,18 @@ const MissionDetails = ({ mission, onMissionComplete }) => {
         <button className="button is-primary" onClick={handleNextStep}>
           Siguiente Paso
         </button>
-        <button className="button is-primary" onClick={handleOpenSteps}>
-          Ver Pasos en Otra Pestaña
+        <button className="button is-primary" onClick={onReturnToMissions}>
+          Volver a las misiones
         </button>
       </div>
+    </div>
+  );
+};
+
+const BrocheroCounter = ({ brocherosGanados }) => {
+  return (
+    <div>
+      <p>Brocheros Ganados: {brocherosGanados}</p>
     </div>
   );
 };
@@ -78,17 +79,27 @@ const MissionDetails = ({ mission, onMissionComplete }) => {
 const App = () => {
   const [selectedMission, setSelectedMission] = useState(null);
   const [brocherosGanados, setBrocherosGanados] = useState(0);
+  const [showMissions, setShowMissions] = useState(true);
 
   const handleMissionClick = (mission) => {
     if (selectedMission && selectedMission.id === mission.id) {
       setSelectedMission(null); // Deselecciona la misión si ya está seleccionada
+      setShowMissions(true); // Vuelve a mostrar todas las misiones
     } else {
       setSelectedMission(mission); // Selecciona la misión si no está seleccionada
+      setShowMissions(false); // Oculta las otras misiones
     }
   };
 
   const handleMissionComplete = () => {
     setBrocherosGanados(brocherosGanados + 1);
+    setSelectedMission(null); // Deselecciona la misión
+    setShowMissions(true); // Vuelve a mostrar todas las misiones
+  };
+
+  const returnToMissions = () => {
+    setSelectedMission(null); // Deselecciona la misión
+    setShowMissions(true); // Vuelve a mostrar todas las misiones
   };
 
   const missions = [
@@ -166,23 +177,29 @@ const App = () => {
     // Otras misiones...
   ];
 
+
   return (
     <div>
       <Header titulo="Aplicación Bocheriana" />
       <div className="container">
-        <div className="buttons">
-          {missions.map((mission) => (
-            <MissionButton key={mission.id} mission={mission} onMissionClick={handleMissionClick} />
-          ))}
-        </div>
-        {selectedMission && <MissionDetails mission={selectedMission} onMissionComplete={handleMissionComplete} />}
+        <BrocheroCounter brocherosGanados={brocherosGanados} />
+        {selectedMission ? (
+          <MissionDetails
+            mission={selectedMission}
+            onMissionComplete={handleMissionComplete}
+            onReturnToMissions={returnToMissions}
+          />
+        ) : (
+          <div className="buttons">
+            {showMissions && (
+              missions.map((mission) => (
+                <MissionButton key={mission.id} mission={mission} onMissionClick={handleMissionClick} />
+              ))
+            )}
+          </div>
+        )}
       </div>
-      {/* <p>Brocheros Ganados: {brocherosGanados}</p> */}
-      <button className="button is-primary" onClick={() => window.history.back()}>
-        Volver
-      </button>
     </div>
   );
 };
-
 export default App;
