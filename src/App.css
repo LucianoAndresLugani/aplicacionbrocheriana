@@ -1,0 +1,96 @@
+/* App.css */
+:root {
+  --color-fondo: #223127; /* Color de fondo oscuro verde-negruzco */
+  --color-primario: #9C0D38; /* Color primario rojo oscuro */
+  --color-secundario: #CE5374; /* Color secundario rosa apagado */
+  --color-texto: #DDF0FF; /* Color de texto azul claro muy suave */
+}
+
+/* Uso de variables de color */
+.hero.is-primary {
+  background-color: var(--color-fondo);
+}
+
+.header {
+  background-color: var(--color-primario);
+  color: var(--color-texto);
+  padding: 20px;
+  text-align: center;
+}
+
+.hero-title {
+  margin-top: 0;
+}
+
+.mission-details {
+  margin-top: 20px;
+}
+
+.mission-details h2 {
+  margin-bottom: 10px;
+}
+
+.mission-details video {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.button {
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+.button-color-1 {
+  background-color: #223127;
+}
+
+.button-color-2 {
+  background-color: #9C0D38;
+}
+
+.button-color-3 {
+  background-color: #CE5374;
+}
+
+.button-color-4 {
+  background-color: #DDF0FF;
+  color: #223127;
+}
+
+.active-step {
+  color: #9C0D38;
+}
+
+.inactive-step {
+  color: #223127;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.button {
+  flex: 1 0 auto; /* Esto hace que los botones tengan el mismo tamaño */
+  margin: 5px; /* Añade un poco de espacio alrededor de los botones */
+  text-align: center; /* Centra el texto dentro de los botones */
+}
+
+@media screen and (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+  }
+
+  .button {
+    margin-bottom: 10px;
+  }
+}
