@@ -1,4 +1,4 @@
-/* App.css */
+
 :root {
   --color-fondo: #223127; /* Color de fondo oscuro verde-negruzco */
   --color-primario: #9C0D38; /* Color primario rojo oscuro */
@@ -84,7 +84,22 @@
   margin: 5px; /* Añade un poco de espacio alrededor de los botones */
   text-align: center; /* Centra el texto dentro de los botones */
 }
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* Aspect Ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background: #000;
+}
 
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 @media screen and (max-width: 768px) {
   .buttons {
     flex-direction: column;
